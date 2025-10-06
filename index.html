@@ -562,7 +562,27 @@
 
 <!-- Modal for Event Details -->
 <!-- Modal for Event Details: Description (left), Photos (right) -->
-<div id="event-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,.92); justify-content:center; align-items:center; z-index:999; overflow: hidden;">
+<!-- Modal for Event Details: Description (top), Photos (bottom) for mobile -->
+<div id="event-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.92); justify-content:center; align-items:center; z-index:999; overflow-y:auto; padding: 1rem;">
+  <div style="background:#191929; border-radius:1.2em; max-width: 95vw; max-height: 95vh; padding:1rem; position:relative; color:#fff; box-shadow:0 4px 48px #00BFFF55; display:flex; flex-direction: column; gap:1.5rem;">
+  
+    <button onclick="closeEvent()" style="position:absolute; top:1rem; right:1rem; color:#00BFFF; background:none; border:none; font-size:2rem; cursor:pointer;">&times;</button>
+    
+    <h3 id="modal-title" style="font-weight:700; color:#00BFFF; margin-bottom:10px; text-align:center;"></h3>
+    <p id="modal-date" style="color:#B0B0B0; margin-bottom:1em; text-align:center;"></p>
+    
+    <p id="modal-desc" style="font-size:1.08em; max-height:150px; overflow-y:auto; padding-right:12px; white-space:pre-line; margin-bottom: 1rem;"></p>
+  
+    <div style="display:flex; justify-content:center; align-items:center; gap:1rem; flex-wrap:wrap;">
+      <button onclick="prevImg()" style="background:none; border:none; color:#00BFFF; font-size:2rem; cursor:pointer;">&#10094;</button>
+      <img id="modal-img" style="width:90vw; max-width:400px; height:auto; border-radius:1em; object-fit:cover; box-shadow:0 4px 22px #00BFFF66;">
+      <button onclick="nextImg()" style="background:none; border:none; color:#00BFFF; font-size:2rem; cursor:pointer;">&#10095;</button>
+    </div>
+    
+    <div id="photo-indicator" style="color:#B0B0B0; font-size:1em; text-align:center; margin-top:6px;"></div>
+  </div>
+</div>
+
   <div style="background:#191929; border-radius:1.2em; max-width:1000px; max-height:90vh; padding:2em; position:relative; color:#fff; box-shadow:0 4px 48px #00BFFF55; display:flex; gap:2em; align-items:start; overflow-y:auto; overflow-x:hidden; word-wrap:break-word;">
 
 
