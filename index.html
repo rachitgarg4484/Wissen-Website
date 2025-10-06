@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wissen</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" href="wissen logo new.png" />
+
+<style>
+  :root {
+    --background: #0B0B0F;
+    --primary-accent: #00BFFF;
+    --secondary-accent: #6A5ACD; /* Deep Violet instead of pink */
+    --text-color: #FFFFFF;
+    --paragraph-color: #B0B0B0;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background-color: var(--background);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+  }
+  .bg-watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    width: 600px;
+    opacity: 0.05;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  header {
+    background-color: var(--background);
+    padding: 1.2rem 0 1.6rem 0;
+    font-weight: 700;
+    font-size: 2.1rem;
+    text-align: center;
+    letter-spacing: 0.13em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    position: relative;
+    z-index: 10;
+  }
+  .header-logo {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    background: #fff;
+    object-fit: cover;
+    margin-right: 0.4em;
+  }
+  .recruit-banner {
+    background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+    color: var(--background);
+    font-weight: 700;
+    padding: 1rem;
+    font-size: 1.15rem;
+    text-align: center;
+    border-bottom: 3px solid var(--secondary-accent);
+    box-shadow: 0 2px 10px rgba(0, 191, 255, 0.3);
+  }
+  .recruit-banner a {
+    margin-left: 1rem;
+    background-color: var(--background);
+    color: var(--primary-accent);
+    padding: 0.5rem 1.6rem;
+    border-radius: 1.25rem;
+    text-decoration: none;
+    font-weight: 600;
+    border: 2px solid var(--primary-accent);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .recruit-banner a:hover {
+    background-color: var(--secondary-accent);
+    color: var(--text-color);
+    border-color: var(--secondary-accent);
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    background: var(--background);
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--primary-accent);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0 1.5rem;
+    position: relative;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: var(--secondary-accent);
+    left: 0;
+    bottom: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.25s ease-out;
+  }
+  nav a:hover, nav a:focus {
+    color: var(--secondary-accent);
+  }
+  nav a:hover::after, nav a:focus::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  section {
+    max-width: 960px;
+    margin: 4rem auto;
+    padding: 60px 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .section-title {
+    text-align: center;
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2.5rem;
+  }
+  .hero {
+    text-align: center;
+    margin-top: 4rem;
+  }
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    color: var(--paragraph-color);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+  .quick-links {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+    color: var(--background);
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    box-shadow:
+      0 4px 8px rgba(0, 191, 255, 0.6),
+      0 0 10px rgba(0, 191, 255, 0.5);
+    transition: all 0.25s ease;
+    font-size: 1.1rem;
+    user-select: none;
+  }
+  .btn:hover, .btn:focus {
+    box-shadow: 0 0 12px var(--primary-accent);
+    transform: scale(1.05);
+  }
+  .card {
+    background: rgba(11, 11, 15, 0.8);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    color: var(--text-color);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  #about h3 {
+    margin-top: 0;
+    background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .highlights {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .highlight-pill {
+    padding: 0.4rem 1rem;
+    background: linear-gradient(45deg, var(--secondary-accent), var(--primary-accent));
+    border-radius: 2rem;
+    color: var(--background);
+    font-weight: 700;
+    box-shadow: 0 0 4px var(--secondary-accent);
+    font-size: 1rem;
+  }
+  .team-grid {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  .team-card {
+    flex: 1 1 250px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 1rem;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--text-color);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.22);
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 240px;
+  }
+  .team-card:hover {
+    box-shadow: 0 0 28px var(--secondary-accent);
+    transform: scale(1.07);
+  }
+  .team-photo {
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+    box-shadow: 0 0 10px var(--secondary-accent);
+    margin-bottom: 22px;
+    overflow: hidden;
+    border: 3px solid var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .team-photo img {
+    width: 104px;
+    height: 104px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .team-name {
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.27rem;
+    margin-bottom: 0.3rem;
+  }
+  .team-role {
+    color: var(--secondary-accent);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 13px;
+    letter-spacing: .01em;
+  }
+  .team-contact {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 1rem;
+    margin-top: 9px;
+    margin-bottom: 7px;
+  }
+  .team-contact a {
+    text-decoration: none;
+    color: var(--primary-accent);
+    font-weight: 600;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .team-contact a:hover {
+    color: var(--secondary-accent);
+  }
+  .phone-hidden {
+    cursor: pointer;
+    font-size: 1.05rem;
+    color: var(--secondary-accent);
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .phone-hidden:hover {
+    color: var(--primary-accent);
+    text-decoration: underline;
+  }
+  .events-slider {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.6rem;
+  }
+  .event-card {
+    min-width: 270px;
+    background: rgba(11, 11, 15, 0.63);
+    border-radius: 1rem;
+    padding: 1.5rem 1.4rem;
+    box-shadow: 0 0 9px rgba(0, 191, 255, 0.2);
+    color: var(--text-color);
+    transition: all 0.3s;
+  }
+  .event-card:hover {
+    box-shadow: 0 0 27px var(--primary-accent);
+    transform: translateY(-6px);
+  }
+  .event-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--primary-accent);
+    margin-bottom: 0.3rem;
+  }
+  .contact-info {
+    background: rgba(11, 11, 15, 0.9);
+    border-radius: 1.35rem;
+    padding: 2.5rem 2rem;
+    font-size: 1.09rem;
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto 4.5rem auto;
+    color: var(--paragraph-color);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    letter-spacing: .01em;
+  }
+  .contact-info b {
+    background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .contact-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.3rem;
+    flex-wrap: wrap;
+  }
+  .contact-label {
+    font-weight: 700;
+    color: var(--text-color);
+    min-width: 90px;
+    text-align: right;
+  }
+  .contact-value {
+    text-align: left;
+    word-break: break-all;
+    font-size: 1.1em;
+  }
+  .contact-btn-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1.2em;
+    align-items: center;
+    justify-content: center;
+  }
+  .contact-btn-row .phone-hidden {
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+  }
+  .contact-btn-row .phone-hidden:first-child { margin-left: 0;}
+  .contact-btn-row .phone-hidden:last-child { margin-right: 0;}
+  footer {
+    background-color: transparent;
+    text-align: center;
+    padding: 2rem 0 2rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--paragraph-color);
+    border-top: 1px solid rgba(0, 191, 255, 0.15);
+    margin-bottom: 10px;
+  }
+  .footer-note {
+    color: var(--secondary-accent);
+    margin-top: 1.2em;
+    font-size: 1.07rem;
+    font-weight: 600;
+    line-height: 1.7em;
+    letter-spacing: 0.08em;
+  }
+  @media (max-width: 900px) {
+    .contact-info { padding: 1.5rem 0.5rem; }
+    .team-card { min-width: 180px; }
+    .team-photo, .team-photo img { width: 80px; height: 80px; }
+  }
+  @media(max-width: 700px) {
+    nav {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  @media (max-width: 700px) {
+  #event-slider {
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-x: visible;
+    justify-content: center;
+  }
+  .event-slide {
+    min-width: auto;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .btn, .recruit-banner a {
+    width: 100%;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+}
+
+  @media (max-width: 500px) {
+  .recruit-banner a {
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+    font-size: 1rem;
+  }
+}
+
+    .team-grid {
+      flex-direction: column;
+      gap: 2rem;
+    }
+    section {
+      padding: 40px 0.3rem;
+    }
+    .bg-watermark { width: 98vw; }
+  }
+</style>
+<script>
+  function showPhone(id, phone) {
+    document.getElementById(id).innerText = phone;
+  }
+</script>
+</head>
+<body>
+<img src="wissen logo new.png" class="bg-watermark" alt="WISSEN logo watermark" />
+<header>
+  <img src="wissen logo new.png" class="header-logo" alt="Wissen Logo" />
+  Wissen Student Organisation
+</header>
+<div class="recruit-banner">
+  🚀 NOW RECRUITING! Join our core team for a limited time.
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSehJwjsLrogfNifXVRUdJ04K_q2edmI3ib6eYUxvH8uHnAP7Q/viewform?usp=send_form" target="_blank" rel="noopener noreferrer">  Apply Now   </a>
+</div>
+<nav>
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#events">Events</a>
+  <a href="#team">Team</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="home" class="hero" tabindex="-1">
+  <h1>Unleash Your Sports Potential!</h1>
+  <p>Wissen gives you wings. Join a vibrant sports community alive with passion, teamwork, and growth beyond classrooms.</p>
+  <div class="quick-links">
+    <a href="#contact" class="btn">Join Us</a>
+    <a href="#events" class="btn">Events</a>
+    <a href="#contact" class="btn">Contact</a>
+  </div>
+</section>
+
+<section id="about" class="card" tabindex="-1">
+  <h2 class="section-title">About Wissen</h2>
+  <h3>Our Mission</h3>
+  <p>
+    Welcome to WISSEN, the student organization at LPU driving innovation, collaboration, and creativity. From technical events and talk shows to cultural fests, we foster growth, skills, and lifelong connections. Join us to explore, create, and lead!
+  </p>
+  <div class="highlights">
+    <span class="highlight-pill">Community</span>
+    <span class="highlight-pill">Excellence</span>
+    <span class="highlight-pill">Creativity</span>
+    <span class="highlight-pill">Growth</span>
+  </div>
+  </section>
+<!-- Upcoming Events Section -->
+<section id="upcoming-events" tabindex="-1" style="margin: 4rem auto; max-width: 960px; padding: 60px 1.5rem;">
+  <h2 class="section-title" style="text-align: center; font-size: 2.25rem; font-weight: 700; text-transform: uppercase; background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2.5rem;">
+    Upcoming Events
+  </h2>
+  <p style="text-align:center; color: var(--paragraph-color); font-size: 1.2rem;">
+    NO Upcoming Event
+  </p>
+<!-- Events Slider Section -->
+<section id="events" tabindex="-1" style="max-width:950px; margin:4rem auto; padding:60px 1.5rem;">
+  <h2 class="section-title">Events</h2>
+  <div id="event-slider" style="display:flex; overflow-x:auto; gap:1.5rem; scroll-behavior:smooth;">
+  <!-- Sports Mania 4.0 Card -->
+  <div class="event-slide" style="min-width:300px; border-radius:16px; box-shadow:0 0 15px #00BFFF44; cursor:pointer;" onclick="openEvent(0)">
+    <img src="sportsmainabanner.png" alt="Sports Mania 4.0" style="width:100%; height:180px; object-fit:cover; border-radius:16px 16px 0 0;">
+    <div style="background:linear-gradient(45deg,#00BFFF,#6A5ACD);padding:0.8rem 1em;border-radius:0 0 16px 16px;color:#fff;font-weight:700;font-size:1.28rem;">
+      Sports Mania 4.0
+    </div>
+    <div style="color:#B0B0B0;padding:0.6em 1em 1em 1em;font-size:1.04em;">
+      8 Sept - 20 Sept, 2025
+    </div>
+  </div>
+  <!-- Esports Mania 2.0 Card -->
+  <div class="event-slide" style="min-width:300px; border-radius:16px; box-shadow:0 0 15px #00BFFF44; cursor:pointer;" onclick="openEvent(1)">
+    <img src="esportsthumbnail.jpg" alt="Esports Mania 2.0" style="width:100%; height:180px; object-fit:cover; border-radius:16px 16px 0 0;">
+    <div style="background:linear-gradient(45deg,#00BFFF,#6A5ACD);padding:0.8rem 1em;border-radius:0 0 16px 16px;color:#fff;font-weight:700;font-size:1.28rem;">
+      Esports Mania 2.0
+    </div>
+    <div style="color:#B0B0B0;padding:0.6em 1em 1em 1em;font-size:1.04em;">
+      5th Sep - 20th Sep, 2025
+    </div>
+  </div>
+</div>
+    <!-- Add more event slides similarly for more events -->
+  </div>
+</section>
+
+<!-- Modal for Event Details -->
+<!-- Modal for Event Details: Description (left), Photos (right) -->
+<div id="event-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,.92); justify-content:center; align-items:center; z-index:999; overflow: hidden;">
+  <div style="background:#191929; border-radius:1.2em; max-width:1000px; max-height:90vh; padding:2em; position:relative; color:#fff; box-shadow:0 4px 48px #00BFFF55; display:flex; gap:2em; align-items:start; overflow-y:auto; overflow-x:hidden; word-wrap:break-word;">
+
+
+    <button onclick="closeEvent()" style="position:absolute; top:1.3em; right:2em; color:#00BFFF; background:none; border:none; font-size:2rem; cursor:pointer;">&times;</button>
+    <div style="flex:1;">
+      <h3 id="modal-title" style="font-weight:700; color:#00BFFF; margin-bottom:10px;"></h3>
+      <p id="modal-date" style="color:#B0B0B0; margin-bottom:1em;"></p>
+      <p id="modal-desc" style="font-size:1.08em; margin-bottom:1.4em; white-space:pre-line; max-height:420px; overflow-y:auto; padding-right:12px; overflow-x:hidden;  overflow: hidden;"></p>
+
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button onclick="prevImg()" style="background:none; border:none; color:#00BFFF; font-size:2em; cursor:pointer;">&#10094;</button>
+        <img id="modal-img" style="width:330px; height:210px; border-radius:1em; object-fit:cover; box-shadow:0 4px 22px #00BFFF66;">
+        <button onclick="nextImg()" style="background:none; border:none; color:#00BFFF; font-size:2em; cursor:pointer;">&#10095;</button>
+      </div>
+      <div id="photo-indicator" style="margin-top:6px; color:#B0B0B0; font-size:1em;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Event details and photos from your query
+const eventDetails = [
+  {
+    name: "Sports Mania 4.0",
+    date: "8 Sept - 20 Sept, 2025",
+    description: `Sports Mania 4.0 🏆
+
+Sports Mania 4.0 marked another incredible chapter in Wissen’s journey of energy, enthusiasm, and campus spirit. The event brought together passionate athletes and sports lovers from across the university, turning the fields and courts into arenas of pure excitement.
+
+The championship featured four major sports, each filled with thrilling performances and intense competition:
+🏸 Badminton: Included Men’s Singles, Women’s Singles, Men’s Doubles, Women’s Doubles, and Mixed Doubles formats that showcased both skill and teamwork.
+♟️ Chess: A battle of minds where strategy and focus defined every move.
+🏏 Box Cricket: Fast-paced and full of energy, keeping the audience on edge with every ball.
+⚽ Futsal: High-speed action, sharp coordination, and unforgettable goals.
+
+From the cheers of the crowd to the sportsmanship on display, Sports Mania 4.0 truly celebrated the spirit of competition and unity. The event concluded with roaring applause, happy faces, and memories that will inspire many more editions to come. 🌟.`,
+    photos: [
+      "badminton04.png","badminton01.png","badminton03.png","badminton02.png","sportsmainabanner.png"
+    ]
+  },
+  {
+    name: "Esports Mania 2.0",
+    date: "5th Sep - 20th Sep, 2025",
+    description: `Esports Mania 2.0 – A Thrilling Esports Showdown
+
+Esports Mania 2.0 brought an electrifying dose of competitive gaming to the campus, featuring two of the most popular esports titles — Smash Karts and BGMI.
+Participants showcased their gaming skills, quick reflexes, and team coordination in intense matches that kept the audience hooked till the end.
+From thrilling kart battles in Smash Karts to strategic squad fights in BGMI, every round was packed with excitement and energy. The event not only highlighted the growing esports culture among students but also celebrated teamwork, strategy, and sportsmanship.`,
+    photos: [
+      "esportsthumbnail.jpg",
+      "esports02.png",
+      "esports04.png",
+      "esports05.png",
+      "esports01.png",
+      "esports03.png",
+    ]
+  }
+];
+
+let currentEvent = 0;
+let currentImg = 0;
+
+function openEvent(index) {
+  const event = eventDetails[index];
+  document.getElementById('modal-title').textContent = event.name;
+  document.getElementById('modal-date').textContent = "Date: " + event.date;
+  document.getElementById('modal-desc').textContent = event.description;
+  currentEvent = index;
+  currentImg = 0;
+  showCurrentImg(event);
+  document.getElementById('event-modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden'; // disables background scroll
+}
+
+function closeEvent() {
+  document.getElementById('event-modal').style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+function showCurrentImg(event) {
+  document.getElementById('modal-img').src = event.photos[currentImg];
+  document.getElementById('photo-indicator').textContent = `${currentImg + 1} / ${event.photos.length}`;
+}
+
+function prevImg() {
+  const event = eventDetails[currentEvent];
+  currentImg = (currentImg - 1 + event.photos.length) % event.photos.length;
+  showCurrentImg(event);
+}
+
+function nextImg() {
+  const event = eventDetails[currentEvent];
+  currentImg = (currentImg + 1) % event.photos.length;
+  showCurrentImg(event);
+}
+
+</script>
+
+  <h2 class="section-title">Our Team</h2>
+  <div class="team-grid">
+    <div class="team-card" tabindex="0">
+      <div class="team-photo"><img src="Screenshot 2025-10-05 224103.png" alt="Shubham Malothra"></div>
+      <div class="team-name">Shubham Malothra</div>
+      <div class="team-role">CEO</div>
+      <div class="team-contact">
+        <a href="https://www.linkedin.com/in/shubham-malhotra-0b6033338" target="_blank">LinkedIn</a>
+        <button id="phone-shubham" class="phone-hidden" onclick="showPhone('phone-shubham', '+91 74881 40837')">Show Phone</button>
+      </div>
+    </div>
+    <div class="team-card" tabindex="0">
+      <div class="team-photo"><img src="Screenshot 2025-10-05 224112.png" alt="Yash Jajodia"></div>
+      <div class="team-name">Yash Jajodia</div>
+      <div class="team-role">CO-CEO</div>
+      <div class="team-contact">
+        <a href="https://www.linkedin.com/in/yash-jajodia-04515030b" target="_blank">LinkedIn</a>
+        <button id="phone-yash" class="phone-hidden" onclick="showPhone('phone-yash', '+91 98316 40780')">Show Phone</button>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="teamslideshow">
+  <h2 class="section-title">Wissen Team Moments</h2>
+  <div class="slideshow-container">
+    <div class="slide fade">
+      <img src="group1.jpg" alt="Wissen Team Group Photo 1" />
+      <div class="caption">Wissen Team</div>
+    </div>
+    <div class="slide fade">
+      <img src="group2.jpg" alt="Wissen Team Group Photo 2" />
+      <div class="caption">Wissen Team</div>
+    </div>
+        <div class="slide fade">
+      <img src="group3.jpg" alt="Wissen Team Group Photo 2" />
+      <div class="caption">Wissen Team</div>
+    </div>
+    <!-- Add more group slides by duplicating the block above with new image src and caption -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+</section>
+<style>
+  .slideshow-container {
+    max-width: 400px;
+    margin: 3rem auto 2rem auto;
+    position: relative;
+    border-radius: 1.2rem;
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 6px 28px #00bfffd9;
+    overflow: hidden;
+  }
+  .slide { display: none; text-align: center; }
+  .slide img {
+    width: 620px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 38px;
+    border: 4px solid #00BFFF;
+    box-shadow: 0 0 18px #6A5ACD99;
+    background: #fff;
+}
+.slideshow-container {
+    max-width: 700px;
+}
+
+  .caption {
+    color: var(--primary-accent);
+    font-weight: 700;
+    padding: 14px 0 0 0;
+    font-size: 1.09rem;
+    letter-spacing: .03em;
+    text-shadow: 0 4px 1px #0B0B0F;
+  }
+  .prev, .next {
+    cursor: pointer; position: absolute; top: 50%; width: auto; padding: 13px;
+    margin-top: -22px; color: #fff; font-weight: 700; font-size: 2rem;
+    background: rgba(106,90,205,0.4); border-radius: 4px;
+    user-select: none; transition: background .2s;
+  }
+  .next { right: 0; }
+  .prev { left: 0; }
+  .prev:hover, .next:hover { background: #00BFFF; }
+  .fade { animation-name: fade; animation-duration: 1s;}
+  @keyframes fade { from{opacity:.4} to{opacity:1} }
+</style>
+<script>
+  var slideIndex = 1;
+  showSlides(slideIndex);
+  function plusSlides(n) { showSlides(slideIndex += n);}
+  function showSlides(n) {
+    var i, slides = document.getElementsByClassName("slide");
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) slides[i].style.display = "none";
+    slides[slideIndex-1].style.display = "block";
+  }
+  setInterval(function(){ plusSlides(1); }, 2000);
+</script>
+
+<section id="contact" tabindex="-1">
+  <h2 class="section-title">Contact Us</h2>
+  <div class="contact-info" role="contentinfo">
+    <div class="contact-row">
+      <span class="contact-label"><b>Email:</b></span>
+      <span class="contact-value">org.wissen@gmail.com</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label"><b>Phone:</b></span>
+      <span class="contact-btn-row">
+        <button class="phone-hidden" onclick="showPhone('contact-shubham', '+91 74881 40837')" id="contact-shubham">Show Shubham</button>
+        <button class="phone-hidden" onclick="showPhone('contact-yash', '+91 98316 40780')" id="contact-yash">Show Yash</button>
+      </span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label"><b>Location:</b></span>
+      <span class="contact-value">LPU Phagwara Punjab</span>
+    </div>
+  </div>
+</section>
+<footer>
+  &copy; 2025 Wissen Student Organization
+  <div class="footer-note">
+    Student Organisation Wissen, Under the Aegis of Division of Youth Affairs,<br>
+    Student Welfare Wing, LPU.
+  </div>
+</footer>
+</body>
+</html>
